@@ -29,7 +29,7 @@ using namespace std;
     TypeItem stack::pop(){
         if(isEmpty()){
             cout << "The stack is empty\n";
-            return;
+            return 0;
         }
         size--;
         return structure[size];

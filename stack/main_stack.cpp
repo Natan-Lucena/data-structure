@@ -16,16 +16,21 @@ int main() {
         
         cin >> option;
 
-        if(option == 1){
-            cout<< "Press the value";
-            cin >> item;
-            stack1.push(item);
-        }
-        if(option == 2){
-            stack1.pop();
-        }
-        if(option == 3){
-            stack1.printStack();
+        switch(option){
+            case 0: break;
+            case 1:
+                cout<< "Press the value \n";
+                cin >> item;
+                stack1.push(item);
+            break;
+            case 2:
+                stack1.pop();
+                cout << "Object removed: " << item << "\n";
+            break;
+            case 3:
+                stack1.printStack();
+                break;
+
         }
     }while(option != 0);
 
