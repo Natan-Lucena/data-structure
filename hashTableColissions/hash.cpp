@@ -27,33 +27,56 @@
     }
 
     void Hash::add(User user){
+        if(isFull()){
+            cout << "The hash is full\n";
+            return;
+        }
         int local = hashFunction(user);
+        while(structure[local].getIRA() > 0){
+            local = (local + 1) % max_posi;
+        }
         structure[local] = user;
         quanty_itens++;
     }
     void Hash::remove(User user){
+        if(isEmpty()){
+            cout<< "Hash table is empty\n";
+            return;
+        }
         int local = hashFunction(user);
-        if(structure[local].getIRA() != -1){
-            structure[local] = User(-1, " ");
-            quanty_itens--;
+        bool value = false;
+        while(structure[local].getIRA() != -1){
+            if(structure[local].getIRA() == user.getIRA()){
+                cout << "Element removed\n";
+                structure[local] = User(-2, " ");
+                quanty_itens--;
+                value = true;
+                break;
+            }
+            local = (local  + 1) % max_posi;
+        }
+        if(!value) {
+            cout << "Element does not exits\n";
         }
     }
     void Hash::find(User& user,bool& finder){
         int local = hashFunction(user);
-        User aux = structure[local];
-        if(user.getIRA() != aux.getIRA()){
-            finder = false;
-            return;
-        } 
-        finder = true;
-        user = aux;
+        finder = false;
+        while(structure[local].getIRA() != -1){
+            if(structure[local].getIRA() == user.getIRA()){
+                finder = true;
+                user = structure[local];
+                break;
+            }
+            local = (local + 1) % max_posi;
+        }
     }
 
     void Hash::print(){
         cout << "Hash table:\n";
         for(int i = 0; i< max_posi; i++){
-            if(structure[i].getIRA() != -1){
-                cout << structure[i].getName() << "/" << structure[i].getIRA() << "\n";
+            if(structure[i].getIRA() >= 0){
+                cout << i << ":" << structure[i].getName() << "/" << structure[i].getIRA() << "\n";
             }
         }
     }
